@@ -123,18 +123,19 @@ public class GeneratorImpl implements Generator {
 			dataMap.put("className", className);
 			dataMap.put("fieldList", fieldList);
 			dataMap.put("StringUtils", new StringUtils());
-			dataMap.put("model", generatorCfg.getModel(className));
+			dataMap.putAll(generatorCfg.getModel(className));
 
+			// 生成Entity
 			generateEntity(className, dataMap);
-
+			// 生成DAO
 			generateDao(className, dataMap);
-
+			// 生成Service
 			generateService(className, dataMap);
-
+			// 生成Controller
 			generateController(className, dataMap);
-
+			// 生成viewForm
 			generateViewForm(className, dataMap);
-
+			// 生成viewList
 			generateViewList(className, dataMap);
 
 			logger.info("Generate Success.");
@@ -220,32 +221,14 @@ public class GeneratorImpl implements Generator {
 	private List<Field> transformFieldList(List<Column> columnList) {
 		List<Field> fieldList = new ArrayList<Field>(columnList.size());
 		for (Column column : columnList) {
-			String fieldName = this.transformFieldName(column.getName());
-			String fieldType = this.transformFieldType(column.getType());
+			String fieldName = generatorCfg.dbKeyInfo.transformFieldName(column
+					.getName());
+			String fieldType = generatorCfg.dbKeyInfo.transformFieldType(column
+					.getType());
 			String fieldComment = column.getComment();
 			fieldList.add(new Field(fieldName, fieldType, fieldComment));
 		}
 		return fieldList;
-	}
-
-	private String transformFieldName(String columnName) {
-		String fieldName;
-		if (generatorCfg.keywordList.contains(columnName)) {
-			fieldName = columnName + "_";
-		} else {
-			fieldName = columnName;
-		}
-		return StringUtils.toCamelhump(fieldName);
-	}
-
-	private String transformFieldType(String columnType) {
-		String fieldType;
-		if (generatorCfg.typeMap.containsKey(columnType)) {
-			fieldType = generatorCfg.typeMap.get(columnType);
-		} else {
-			fieldType = "String";
-		}
-		return fieldType;
 	}
 
 	public Map<Table, List<Column>> getTableMapFromExcel() {

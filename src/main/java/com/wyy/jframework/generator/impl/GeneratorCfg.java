@@ -2,10 +2,6 @@ package com.wyy.jframework.generator.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -17,23 +13,10 @@ import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 
 public class GeneratorCfg {
+	private static Logger logger = LoggerFactory.getLogger(GeneratorCfg.class);
 	// 文件分隔符
 	public String FILE_SEPERATOR = File.separator;
 	private static GeneratorCfg instance;
-
-	private GeneratorCfg() {
-		init();
-	}
-
-	public static GeneratorCfg instance() {
-		if (null == instance) {
-			instance = new GeneratorCfg();
-		}
-		return instance;
-	}
-
-	private static Logger logger = LoggerFactory.getLogger(GeneratorCfg.class);
-
 	// 主要提供基本功能模块代码生成。
 	// 目录生成结构：{packageName}/{moduleName}/{dao,entity,service,web}/{subModuleName}/{className}
 
@@ -50,9 +33,19 @@ public class GeneratorCfg {
 	// Java文件路径
 	String javaPath;
 	String viewPath;
-	// 定义模板变量
-	List<String> keywordList = new ArrayList<String>();
-	Map<String, String> typeMap = new HashMap<String, String>();
+	//数据库信息适配，如关键字、字段映射等
+	DBKeyInfo dbKeyInfo = MysqlKeyInfo.instance();
+
+	private GeneratorCfg() {
+		init();
+	}
+
+	public static GeneratorCfg instance() {
+		if (null == instance) {
+			instance = new GeneratorCfg();
+		}
+		return instance;
+	}
 
 	public void init() {
 		try {
@@ -61,7 +54,6 @@ public class GeneratorCfg {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		initKeyWords();
 	}
 
 	private void initPath() throws IOException {
@@ -140,23 +132,7 @@ public class GeneratorCfg {
 				+ tableName + ".sql";
 	}
 
-	public void initKeyWords() {
-		keywordList = Arrays.asList("abstract", "assert", "boolean", "break",
-				"byte", "case", "catch", "char", "class", "continue",
-				"default", "do", "double", "else", "enum", "extends", "final",
-				"finally", "float", "for", "if", "implements", "import",
-				"instanceof", "int", "interface", "long", "native", "new",
-				"package", "private", "protected", "public", "return",
-				"strictfp", "short", "static", "super", "switch",
-				"synchronized", "this", "throw", "throws", "transient", "try",
-				"void", "volatile", "while");
-
-		typeMap.put("bigint", "long");
-		typeMap.put("varchar", "String");
-		typeMap.put("char", "String");
-		typeMap.put("int", "int");
-		typeMap.put("text", "String");
-	}
+	
 
 	public Map<String, String> getModel(String className) {
 		Map<String, String> model = Maps.newHashMap();
@@ -186,4 +162,5 @@ public class GeneratorCfg {
 						+ ":" + className);
 		return model;
 	}
+
 }

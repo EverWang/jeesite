@@ -27,6 +27,6 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine{
 	}
 
 	public String getEngineType() {
-		return GeneratorConsts.ENGINE_TYPE_FREEMARKER;
+		return TemplateConsts.ENGINE_TYPE_FREEMARKER;
 	}
 }
