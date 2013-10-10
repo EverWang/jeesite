@@ -26,6 +26,6 @@ private static final String DEFAULT_TEMPLATE = "VelocityExample.vm";
 
 	public String getEngineType() {
 		// TODO Auto-generated method stub
-		return GeneratorConsts.ENGINE_TYPE_VELOCITY;
+		return TemplateConsts.ENGINE_TYPE_VELOCITY;
 	}
 }

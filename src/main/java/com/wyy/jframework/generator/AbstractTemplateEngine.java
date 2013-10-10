@@ -23,7 +23,7 @@ public abstract class AbstractTemplateEngine implements TemplateEngine{
 	public abstract String getEngineType();
 	
 	public void run(Map context)throws Exception{
-		if(GeneratorConsts.ENGINE_TYPE_FREEMARKER.equals(getEngineType()))
+		if(TemplateConsts.ENGINE_TYPE_FREEMARKER.equals(getEngineType()))
 			executeFreemarker(context);
 		else
 			executeVelocity(context);
@@ -44,6 +44,11 @@ public abstract class AbstractTemplateEngine implements TemplateEngine{
 	    out.flush();
 	}
 	
+	/**
+	 * 暂时不想支持velocity,所以注释掉
+	 * @param root
+	 * @throws Exception
+	 */
 	private void executeVelocity(Map root)throws Exception{
 		
 //		Velocity.init();
