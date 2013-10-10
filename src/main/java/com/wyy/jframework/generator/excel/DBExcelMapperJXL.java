@@ -26,25 +26,25 @@ import jxl.Workbook;
  * @Author WYY
  * @Description 
  */
-public class DBExcelMapper
+public class DBExcelMapperJXL
 {
-    private static DBExcelMapper dbExcelMapper;
-    private DBExcelMapper()
+    private static DBExcelMapperJXL dbExcelMapper;
+    private DBExcelMapperJXL()
     {
 
     }
 
-    public static DBExcelMapper instance()
+    public static DBExcelMapperJXL instance()
     {
         if(null==dbExcelMapper)
         {
-            dbExcelMapper = new DBExcelMapper();
+            dbExcelMapper = new DBExcelMapperJXL();
         }
         return dbExcelMapper;
 
     }
 
-    private static Logger logger = LoggerFactory.getLogger(DBExcelMapper.class);
+    private static Logger logger = LoggerFactory.getLogger(DBExcelMapperJXL.class);
 
     public Map<Table, List<Column>> createTableMap(String inputPath)
     {
