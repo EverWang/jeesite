@@ -1,7 +1,7 @@
 /**
  * There are <a href="https://github.com/thinkgem/jeesite">JeeSite</a> code generation
  */
-package ${model.packageName}.${model.moduleName}.web${model.subModuleName};
+package ${packageName}.${moduleName}.web${subModuleName};
 <#assign ClassName=StringUtils.firstToUpper(className)>
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,16 +20,16 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
-import ${model.packageName}.${model.moduleName}.entity${model.subModuleName}.${ClassName};
-import ${model.packageName}.${model.moduleName}.service${model.subModuleName}.${ClassName}Service;
+import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
+import ${packageName}.${moduleName}.service${subModuleName}.${ClassName}Service;
 
 /**
- * ${model.functionName}Controller
- * @author ${model.classAuthor}
- * @version ${model.classVersion}
+ * ${functionName}Controller
+ * @author ${classAuthor}
+ * @version ${classVersion}
  */
 @Controller
-@RequestMapping(value = "${r"${model.adminPath}"}/${model.urlPrefix}")
+@RequestMapping(value = "${r"${adminPath}"}/${urlPrefix}")
 public class ${ClassName}Controller extends BaseController {
 
 	@Autowired
@@ -44,7 +44,7 @@ public class ${ClassName}Controller extends BaseController {
 		}
 	}
 	
-	@RequiresPermissions("${model.permissionPrefix}:view")
+	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
@@ -52,34 +52,34 @@ public class ${ClassName}Controller extends BaseController {
 			${className}.setCreateBy(user);
 		}
         Page<${ClassName}> page = ${className}Service.find(new Page<${ClassName}>(request, response), ${className}); 
-        model.addAttribute("page", page);
-		return "${model.viewPrefix}List";
+        addAttribute("page", page);
+		return "${viewPrefix}List";
 	}
 
-	@RequiresPermissions("${model.permissionPrefix}:view")
+	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "form")
 	public String form(${ClassName} ${className}, Model model) {
-		model.addAttribute("${className}", ${className});
-		return "${model.viewPrefix}Form";
+		addAttribute("${className}", ${className});
+		return "${viewPrefix}Form";
 	}
 
-	@RequiresPermissions("${model.permissionPrefix}:edit")
+	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "save")
 	public String save(${ClassName} ${className}, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, ${className})){
 			return form(${className}, model);
 		}
 		${className}Service.save(${className});
-		addMessage(redirectAttributes, "保存${model.functionName}'" + ${className}.getName() + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/${model.viewPrefix}/?repage";
+		addMessage(redirectAttributes, "保存${functionName}'" + ${className}.getName() + "'成功");
+		return "redirect:"+Global.getAdminPath()+"/${viewPrefix}/?repage";
 	}
 	
-	@RequiresPermissions("${model.permissionPrefix}:edit")
+	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		${className}Service.delete(id);
-		addMessage(redirectAttributes, "删除${model.functionName}成功");
-		return "redirect:"+Global.getAdminPath()+"/${model.viewPrefix}/?repage";
+		addMessage(redirectAttributes, "删除${functionName}成功");
+		return "redirect:"+Global.getAdminPath()+"/${viewPrefix}/?repage";
 	}
 
 }

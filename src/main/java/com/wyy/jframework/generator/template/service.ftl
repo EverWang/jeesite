@@ -1,7 +1,7 @@
 /**
  * There are <a href="https://github.com/thinkgem/jeesite">JeeSite</a> code generation
  */
-package ${model.packageName}.${model.moduleName}.service${model.subModuleName};
+package ${packageName}.${moduleName}.service${subModuleName};
 <#assign ClassName=StringUtils.firstToUpper(className)>
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -15,15 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
-import ${model.packageName}.${model.moduleName}.entity${model.subModuleName}.${ClassName};
-import ${model.packageName}.${model.moduleName}.dao${model.subModuleName}.${ClassName}Dao;
+import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
+import ${packageName}.${moduleName}.dao${subModuleName}.${ClassName}Dao;
 
 
 
 /**
- * ${model.functionName}Service
- * @author ${model.classAuthor}
- * @version ${model.classVersion}
+ * ${functionName}Service
+ * @author ${classAuthor}
+ * @version ${classVersion}
  */
 @Component
 @Transactional(readOnly = true)
